@@ -20,8 +20,8 @@ function useFetch(query, page ) {
           ]); 
       }
       const url = query === "" ? 
-      `https://www.flickr.com/services/rest/?format=json&nojsoncallback=1&api_key=9b4d386e74fbb6fded0861af04365e15&method=flickr.photos.getRecent&page=${page}&per_page=99` :
-      `https://www.flickr.com/services/rest/?format=json&nojsoncallback=1&api_key=9b4d386e74fbb6fded0861af04365e15&method=flickr.photos.search&text=${query}&page=${page}&per_page=99`
+      `https://www.flickr.com/services/rest/?format=json&nojsoncallback=1&api_key=${process.env.REACT_APP_FLICKR_API_KEY}&method=flickr.photos.getRecent&page=${page}&per_page=99` :
+      `https://www.flickr.com/services/rest/?format=json&nojsoncallback=1&api_key=${process.env.REACT_APP_FLICKR_API_KEY}&method=flickr.photos.search&text=${query}&page=${page}&per_page=99`
       ; 
       const res = await axios.get(
         url
