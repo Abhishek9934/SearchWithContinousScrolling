@@ -3,28 +3,14 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import useFetch from "../hooks/fetchImages";
 import RenderImageList from "./body";
+import { Container ,Grid,TextField } from "@material-ui/core";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import { makeStyles } from '@material-ui/core/styles';
-import InputBase from '@material-ui/core/InputBase';
-import { Container } from "@material-ui/core";
-
-const useStyles = makeStyles((theme) => ({
-
-  input: {
-    border: '1px solid black',
-    marginLeft: theme.spacing(1),
-    flex: 1,
-    width: 500
-  },
-
-
-}));
 
 function Homepage() {
-  const classes = useStyles();
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
-  const { loading, error, list } = useFetch(query, page);
+  const { loading, error, list , suggestion } = useFetch(query, page);
   const loader = useRef(null);
 
   const handleChange = (e) => {
@@ -52,14 +38,26 @@ function Homepage() {
   return (
     <div className="App">
       <h1>Search Images</h1>      
-       <InputBase
-        type="text"
-        className={classes.input}
-        placeholder=" Search Images"
-        inputProps={{ 'aria-label': 'search' }}
-        value={query}
-        onChange={handleChange}
-      />
+      <Grid container >
+        <Grid item lg = {4} xs = {0}></Grid>
+        <Grid item lg = {4} xs = {12}>
+        <Autocomplete
+          options={suggestion}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Search input"
+              margin="normal"
+              variant="outlined"
+              InputProps={{ ...params.InputProps, type: 'search' }}
+              onChange = {handleChange}
+            />
+          )}
+        />
+        </Grid>
+        <Grid item  lg = {4} xs = {0}></Grid>
+      </Grid>
+
 
       <Container>
         <br>

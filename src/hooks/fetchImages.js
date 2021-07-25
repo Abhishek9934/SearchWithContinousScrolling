@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 function useFetch(query, page ) {
-
+  const [suggestion , setSuggestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [list, setList] = useState([]);
@@ -15,6 +15,9 @@ function useFetch(query, page ) {
       {
           setList([]);
           setPrevQuery(query);
+          setSuggestions((prev) => [
+            ...new Set([...prev, query])
+          ]); 
       }
       const url = query === "" ? 
       `https://www.flickr.com/services/rest/?format=json&nojsoncallback=1&api_key=9b4d386e74fbb6fded0861af04365e15&method=flickr.photos.getRecent&page=${page}&per_page=99` :
@@ -50,7 +53,7 @@ function useFetch(query, page ) {
 
 
 
-  return { loading, error, list };
+  return { loading, error, list , suggestion };
 }
 
 export default useFetch;
